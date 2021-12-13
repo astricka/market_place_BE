@@ -6,7 +6,7 @@ const { port } = require('./config');
 
 const app = express();
 // routes
-const usersRoutes = require('./API/v1/users');
+const usersRoutes = require('./API/v1/auth');
 
 // middleware
 
@@ -18,6 +18,6 @@ app.get('/', (req, res) => {
     res.send("Hello express");
 });
 
-app.use('/users', usersRoutes);
+app.use('/auth', usersRoutes);
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
