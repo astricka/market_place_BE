@@ -1,0 +1,27 @@
+{
+  "name": "betterskelbiuversion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astricka/market_place_BE.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/astricka/market_place_BE/issues"
+  },
+  "homepage": "https://github.com/astricka/market_place_BE#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "joi": "^17.5.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15"
+  }
+}
