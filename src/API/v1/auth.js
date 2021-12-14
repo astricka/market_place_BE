@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { dbGetAction, dbFail, dbSuccess } = require('../../utils/dbHelper');
-const Joi = require('joi');
 const { token } = require('morgan');
 const {hashValue, verifyHash} = require('../../utils/hashHelper');
 const jwt = require('jsonwebtoken');
 const {jwtSecret} = require('../../config');
+const {validateRegister, validateLogin} = require('../../utils/validationHelper');
 
-router.post('/register', async (req, res) => {
+router.post('/register', validateRegister, async (req, res) => {
     const newUser = {
         email: req.body.email,
         password: hashValue(req.body.password),
@@ -21,11 +21,10 @@ router.post('/register', async (req, res) => {
     if (dbResult.affectedRows === 1) {
         return res.json({ msg: 'register success', newUser: newUser.email});
     }
-    console.log('no rows affected');
-    res.json('register success', dbResult);
+    dbSuccess(res, dbResult);
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', validateLogin, async (req, res) => {
     const sql = 'SELECT * FROM users WHERE email =?';
     const dbResult = await dbGetAction(sql, [req.body.email]);
 
@@ -37,13 +36,13 @@ router.post('/login', async (req, res) => {
         return dbFail(res, 'bad credentials');
     }
 
-    const token = jwt.sign({ email: req.body.email }, jwtSecret, {expiresIn: '1h'});
-    console.log('token =', token);
+    const token = jwt.sign({ email: req.body.email }, jwtSecret, { expiresIn: '1h' });
     const loggedInUser = {
         email: req.body.email,
         token: token
     }
-    res.send({ msg: 'login success', loggedInUser });
+    // dbSuccess(res, loggedInUser);
+    res.send({msg: 'success', loggedInUser})
 });
 
 module.exports = router;
