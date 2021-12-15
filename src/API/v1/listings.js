@@ -13,10 +13,12 @@ router.get('/listings', async (req, res) => {
     dbSuccess(res, dbResult);
 });
 
-router.get('/listings', authenticateToken,  async(req , res ) => {
-    const sql = `SELECT * FROM listings INNER JOIN users ON users.id = listings.userId
-            WHERE users.email = ?`;
-    const dbResult = await dbGetAction(sql, [req.email]);
+router.get('/listings/:userEmail',  async (req , res ) => {
+    const sql = `SELECT listings.id, listings.title, listings.body, listings.price, listings.image FROM listings INNER JOIN users ON users.id = listings.userId
+                 WHERE users.email = ?`;
+
+    const { userEmail } = req.params;
+    const dbResult = await dbGetAction(sql, [userEmail]);
     if (dbResult === false) return dbFail(res);
     dbSuccess(res, dbResult);
 });

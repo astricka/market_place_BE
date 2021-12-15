@@ -9,7 +9,7 @@ const dbGetAction = async (sql, data = []) => {
         return result;
     } catch (error) {
         console.log('/dbGetAction error ', error.message);
-        return false
+        return false;
     }
 };
 
