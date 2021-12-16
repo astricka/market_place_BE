@@ -8,7 +8,7 @@ const dbConfig = {
     database: process.env.DB_DB,
 };
 
-const port = process.env.SERVER_PORT || 7000;
+const port = process.env.PORT || 7000;
 const jwtSecret = process.env.ACCESS_TOKEN_SECRET;
 
 module.exports = {
